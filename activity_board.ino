@@ -55,7 +55,14 @@ void setup() {
 }
 
 void loop() {
-  
+  if(button_pressed(RED_BUTTON)){
+    buzzer.play('c', 5, Buzzer::QUARTER);
+    buzzer.play('d', 5, Buzzer::QUARTER);
+    buzzer.play('e', 5, Buzzer::QUARTER);
+    buzzer.play('c', 5, Buzzer::QUARTER);
+    buzzer.play('g', 5, Buzzer::HALF);
+    delay(1000);
+  }
 }
 
 //void buttonTest(){

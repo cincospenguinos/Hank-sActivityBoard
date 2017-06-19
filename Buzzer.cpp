@@ -8,8 +8,9 @@ Buzzer::Buzzer(int _pin){
 
 void Buzzer::play(char pitch, int octave, int noteLength){
   int freq = getPitch(pitch, octave);
-  int length = getLengthInMillis(noteLength);
-  tone(outputPin, freq, length);
+  int lengthOfNote = getLengthInMillis(noteLength);
+  tone(outputPin, freq, lengthOfNote);
+  delay(lengthOfNote);
 }
 
 // TODO: black keys?
@@ -50,17 +51,17 @@ int Buzzer::getPitch(char pitch, int octave){
 // TODO: Dotted half? Tied notes? How do?
 int Buzzer::getLengthInMillis(int noteLength){
   switch(noteLength){
-  case THIRTY_SECOND:
+  case Buzzer::THIRTY_SECOND:
     return quarterNoteLength / 8;
-  case SIXTEENTH:
+  case Buzzer::SIXTEENTH:
     return quarterNoteLength / 4;
-  case EIGHTH:
+  case Buzzer::EIGHTH:
     return quarterNoteLength / 2;
-  case QUARTER:
+  case Buzzer::QUARTER:
     return quarterNoteLength;
-  case HALF:
+  case Buzzer::HALF:
     return quarterNoteLength * 2;
-  case WHOLE:
+  case Buzzer::WHOLE:
     return quarterNoteLength * 4;
   }
 }

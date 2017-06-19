@@ -9,17 +9,16 @@
 #define Buzzer_h
 #include "Arduino.h"
 
-// Some definitions
-#define THIRTY_SECOND 0
-#define SIXTEENTH 1
-#define EIGHTH 2
-#define QUARTER 3
-#define HALF 4
-#define WHOLE 5
-
 class Buzzer
 {
  public:
+  static const int THIRTY_SECOND = 0;
+  static const int SIXTEENTH = 1;
+  static const int EIGHTH = 2;
+  static const int QUARTER = 3;
+  static const int HALF = 4;
+  static const int WHOLE = 5;
+ 
   Buzzer(int _pin);
   void play(char pitch, int octave, int noteLength);
  private:
