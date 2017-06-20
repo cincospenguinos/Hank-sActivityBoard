@@ -21,6 +21,7 @@ class Buzzer
  
   Buzzer(int _pin);
   void play(char pitch, int octave, int noteLength);
+  void setTempo(int bpm);
  private:
   int outputPin; // What output pin the buzzer will be using
   int quarterNoteLength; // How long a quarter note should be in millis

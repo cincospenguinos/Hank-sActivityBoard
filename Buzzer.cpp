@@ -13,6 +13,10 @@ void Buzzer::play(char pitch, int octave, int noteLength){
   delay(lengthOfNote);
 }
 
+void Buzzer::setTempo(int bpm){
+  quarterNoteLength = 3 * bpm / 50;
+}
+
 // TODO: black keys?
 int Buzzer::getPitch(char pitch, int octave){
   int freq;
