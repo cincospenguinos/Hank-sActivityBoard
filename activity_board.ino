@@ -7,6 +7,7 @@
  * -> Play music when a button is pressed
  * -> Play Simon when a button is pressed
  * -> Logic game to turn on all the LEDs
+ * -> Press a button to play a note
  */
 #include "Buzzer.h"
 #include "header.h"
@@ -69,6 +70,10 @@ void loop() {
       switch(mode){
       case MODE_MUSIC:
         break;
+      case MODE_INSTRUMENT:
+        break;
+      case MODE_LOGIC:
+        break;
       case MODE_SIMON:
         int result;
         result = simon.submitButton(button, buzzer);
@@ -80,13 +85,11 @@ void loop() {
           simon.showCurrentPuzzle(buzzer);
         }
         break;
-      case MODE_LOGIC:
-        break;
       }  
     }
-  }
 
-  delay(100); // Simple delay for now - we will try out interrupts later
+    delay(250); // Simple delay for now - we will try out interrupts later
+  }
 }
 
 ////////// VARIOUS FUNCTIONS ////////////

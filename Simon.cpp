@@ -5,8 +5,9 @@ Simon::Simon(Buzzer b){
 }
 
 void Simon::newPuzzle(){
+  randomSeed(analogRead(0));
   for(int i = 0; i < Simon::PUZZLE_LENGTH; i++)
-    puzzle[i] = rand() % 4;
+    puzzle[i] = random(4);
 
   endOfTurnIndex = 2;
 
@@ -20,10 +21,10 @@ void Simon::newPuzzle(){
 }
 
 void Simon::showStartup(Buzzer b){
-  showColor(Simon::YELLOW, Buzzer::SIXTEENTH, b);
-  showColor(Simon::BLUE, Buzzer::SIXTEENTH, b);
-  showColor(Simon::GREEN, Buzzer::SIXTEENTH, b);
-  showColor(Simon::RED, Buzzer::SIXTEENTH, b);
+  showColor(YELLOW, Buzzer::SIXTEENTH, b);
+  showColor(BLUE, Buzzer::SIXTEENTH, b);
+  showColor(GREEN, Buzzer::SIXTEENTH, b);
+  showColor(RED, Buzzer::SIXTEENTH, b);
 
   for(int i = 0; i < 4; i++)
     digitalWrite(getLedFromColor(i), HIGH);
@@ -45,10 +46,12 @@ int Simon::submitButton(int button, Buzzer b){
     if(currentTurnIndex > endOfTurnIndex){
       Serial.println("END OF TURN");
       showSuccess(b);
+      delay(250);
       currentTurnIndex = 0;
 
       if(++endOfTurnIndex == Simon::PUZZLE_LENGTH){
         showWin(b);
+        delay(2000);
         newPuzzle(); // TODO: Keep this here?
       }
       
@@ -69,7 +72,7 @@ int Simon::submitButton(int button, Buzzer b){
 void Simon::showCurrentPuzzle(Buzzer b){
   for(int i = 0; i <= endOfTurnIndex; i++){
     int color = puzzle[i];
-    showColor(color, Buzzer::QUARTER, b);
+    showColor(color, Buzzer::HALF, b);
     delay(Buzzer::HALF);
   }
 }
@@ -110,7 +113,15 @@ void Simon::showFailure(Buzzer b){
 }
 
 void Simon::showWin(Buzzer b){
-  
+  char winSong[15] = { 'e', 'e', 'f', 'g', 'g', 'f', 'e', 'd', 'c', 'c', 'd', 'e', 'd', 'c', 'c' };
+
+  for(int i = 0; i < 15; i++){
+    char note = winSong[i];
+    char led = getLedFromColor(i % 4);
+    digitalWrite(led, HIGH);
+    b.play(note, 5, Buzzer::EIGHTH);
+    digitalWrite(led, LOW);
+  }
 }
 
 int Simon::getLedFromColor(int color){

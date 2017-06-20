@@ -23,8 +23,16 @@
 #define BUZZER 3
 
 // Actvity modes
-#define TOTAL_MODES 3
+#define TOTAL_MODES 4
 #define MODE_MUSIC 0
-#define MODE_LOGIC 1
-#define MODE_SIMON 2
+#define MODE_INSTRUMENT 1
+#define MODE_LOGIC 2
+#define MODE_SIMON 3
+
+// Vars for logic puzzle and simon
+static const int YELLOW = 0;
+static const int BLUE = 1;
+static const int GREEN = 2;
+static const int RED = 3;
+
 #endif

@@ -10,14 +10,12 @@
  */
 #ifndef Simon_h
 #define Simon_h
+#include "header.h"
 #include "Buzzer.h"
+#include "Arduino.h"
 
 class Simon {
   public:
-    static const int YELLOW = 0;
-    static const int BLUE = 1;
-    static const int GREEN = 2;
-    static const int RED = 3;
     static const int PUZZLE_LENGTH = 10;
     
     Simon(Buzzer b);
