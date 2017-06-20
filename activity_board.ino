@@ -10,8 +10,9 @@
  * -> Press a button to play a note
  */
 #include "Buzzer.h"
-#include "header.h"
 #include "Simon.h"
+#include "header.h"
+#include "LogicPuzzle.h"
 
 // Macros
 #define button_pressed(BUTTON) digitalRead(BUTTON) == LOW
@@ -20,6 +21,7 @@
 int mode = 0; // the current mode of the board
 Buzzer buzzer(BUZZER);
 Simon simon(buzzer);
+LogicPuzzle logicPuzzle(0);
 
 // Function declarations
 int buttonPressed();
@@ -61,6 +63,9 @@ void loop() {
         simon.showStartup(buzzer);
         delay(1000);
         simon.showCurrentPuzzle(buzzer);
+      } else if (mode = MODE_LOGIC){
+        Serial.println("Creating new Logic puzzle...");
+        logicPuzzle.newLogicPuzzle(3);
       }
     } 
 
@@ -73,6 +78,7 @@ void loop() {
       case MODE_INSTRUMENT:
         break;
       case MODE_LOGIC:
+        logicPuzzle.submitButton(button);
         break;
       case MODE_SIMON:
         int result;

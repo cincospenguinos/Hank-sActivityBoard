@@ -35,4 +35,8 @@ static const int BLUE = 1;
 static const int GREEN = 2;
 static const int RED = 3;
 
+// A couple macros
+#define LED_FROM_COLOR(color) (color + 4)
+#define COLOR_FROM_BUTTON(button) (button - 10)
+
 #endif

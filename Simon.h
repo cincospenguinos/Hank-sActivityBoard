@@ -10,7 +10,6 @@
  */
 #ifndef Simon_h
 #define Simon_h
-#include "header.h"
 #include "Buzzer.h"
 #include "Arduino.h"
 
@@ -31,8 +30,6 @@ class Simon {
     void showFailure(Buzzer b);
     void showWin(Buzzer b);
     void showColor(int color, int noteLength, Buzzer b);
-    int getLedFromColor(int color);
-    int getColorFromButton(int button);
     const char pitches[4] = { 'c', 'd', 'e', 'g' };
 };
 #endif

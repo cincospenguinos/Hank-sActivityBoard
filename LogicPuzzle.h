@@ -7,11 +7,12 @@
 #ifndef LogicPuzzle_h
 #define LogicPuzzle_h
 
-// TODO: This
+
 class LogicPuzzle {
   public:
-    LogicPuzzle();
-    void newPuzzle(int turnsAway);
+    LogicPuzzle(int);
+    void newLogicPuzzle(int turnsAway);
+    void submitButton(int which);
   private:
     bool currentState[4];
     void toggle(int which);
