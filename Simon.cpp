@@ -8,7 +8,7 @@ void Simon::newPuzzle(){
   for(int i = 0; i < Simon::PUZZLE_LENGTH; i++)
     puzzle[i] = rand() % 4;
 
-  currentTurnIndex = 2;
+  endOfTurnIndex = 2;
 
   Serial.println("\tPuzzle:");
 
@@ -16,6 +16,7 @@ void Simon::newPuzzle(){
     Serial.print(puzzle[i]);
     Serial.print(" ");
   }
+  Serial.println("");
 }
 
 void Simon::showStartup(Buzzer b){
@@ -34,23 +35,42 @@ void Simon::showStartup(Buzzer b){
     digitalWrite(getLedFromColor(i), LOW);
 }
 
-void Simon::submitButton(int button, Buzzer b){
+int Simon::submitButton(int button, Buzzer b){
   int color = getColorFromButton(button);
   if (color == puzzle[currentTurnIndex]) {
-    showSuccess(b);
-    if(++currentTurnIndex == Simon::PUZZLE_LENGTH){
-      showWin(b);
+    Serial.println("CORRECT!");
+    showColor(color, Buzzer::SIXTEENTH, b);
+    currentTurnIndex++;
+    
+    if(currentTurnIndex > endOfTurnIndex){
+      Serial.println("END OF TURN");
+      showSuccess(b);
+      currentTurnIndex = 0;
+
+      if(++endOfTurnIndex == Simon::PUZZLE_LENGTH){
+        showWin(b);
+        newPuzzle(); // TODO: Keep this here?
+      }
+      
+      return 1;
     }
+
+    return 0;
   } else {
+    Serial.println("INCORRECT!");
     showFailure(b);
-    currentTurnIndex = 2;
+    Serial.println("Resetting...");
+    currentTurnIndex = 0;
+    endOfTurnIndex = 2;
+    return -1;
   }
 }
 
 void Simon::showCurrentPuzzle(Buzzer b){
-  for(int i = 0; i <= currentTurnIndex; i++){
+  for(int i = 0; i <= endOfTurnIndex; i++){
     int color = puzzle[i];
-    showColor(color, Buzzer::HALF, b);
+    showColor(color, Buzzer::QUARTER, b);
+    delay(Buzzer::HALF);
   }
 }
 
@@ -63,22 +83,30 @@ void Simon::showColor(int color, int noteLength, Buzzer b){
 }
 
 void Simon::showSuccess(Buzzer b){
-  showColor(YELLOW, Buzzer::EIGHTH, b);
-  showColor(BLUE, Buzzer::EIGHTH, b);
-  showColor(GREEN, Buzzer::EIGHTH, b);
-  showColor(RED, Buzzer::EIGHTH, b);
+  showColor(YELLOW, Buzzer::SIXTEENTH, b);
+  showColor(BLUE, Buzzer::SIXTEENTH, b);
+  showColor(GREEN, Buzzer::SIXTEENTH, b);
+  showColor(RED, Buzzer::SIXTEENTH, b);
 
   for(int i = 0; i < 4; i++)
     digitalWrite(getLedFromColor(i), HIGH);
 
-  b.play('c', 5, Buzzer::QUARTER);
+  b.play('c', 5, Buzzer::EIGHTH);
 
   for(int i = 0; i < 4; i++)
     digitalWrite(getLedFromColor(i), LOW);
 }
 
 void Simon::showFailure(Buzzer b){
-  
+  for(int j = 0; j < 3; j++){
+    for(int i = 0; i < 4; i++)
+    digitalWrite(getLedFromColor(i), HIGH);
+
+    b.play('a', 4, Buzzer::QUARTER);
+
+    for(int i = 0; i < 4; i++)
+      digitalWrite(getLedFromColor(i), LOW);
+  }
 }
 
 void Simon::showWin(Buzzer b){

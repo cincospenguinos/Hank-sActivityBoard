@@ -24,7 +24,7 @@ Simon simon(buzzer);
 int buttonPressed();
 
 void setup() {
-  Serial.begin(19200); // For debugging
+  Serial.begin(9600); // For debugging
   
   // Let's setup the buttons
   pinMode(RED_BUTTON, INPUT);
@@ -43,30 +43,50 @@ void setup() {
 void loop() {
   int button = buttonPressed();
 
-  Serial.print("Button pressed: ");
-  Serial.println(button);
+  if(button >= 0){
+    Serial.print("Button pressed: ");
+    Serial.println(button);
 
-  if(button == MODE_BUTTON){
-    mode = (mode + 1) % TOTAL_MODES;
+    // MODE_BUTTON was pressed
+    if(button == MODE_BUTTON){      
+      mode = (mode + 1) % TOTAL_MODES;
 
-    if(mode == MODE_SIMON){
-      Serial.println("Creating new Simon puzzle...");
-      simon.newPuzzle();
-      simon.showStartup(buzzer);
-      delay(1000);
+      Serial.print("Current mode is ");
+      Serial.println(mode);
+      
+      if(mode == MODE_SIMON){
+        Serial.println("Creating new Simon puzzle...");
+        simon.newPuzzle();
+        simon.showStartup(buzzer);
+        delay(1000);
+        simon.showCurrentPuzzle(buzzer);
+      }
+    } 
+
+    // Colored button was pressed
+    else {
+      // It was a colored button
+      switch(mode){
+      case MODE_MUSIC:
+        break;
+      case MODE_SIMON:
+        int result;
+        result = simon.submitButton(button, buzzer);
+        
+        if(result == 1)
+          simon.showCurrentPuzzle(buzzer);
+        else if (result == -1){
+          simon.newPuzzle();
+          simon.showCurrentPuzzle(buzzer);
+        }
+        break;
+      case MODE_LOGIC:
+        break;
+      }  
     }
   }
-  
-  switch(mode){
-  case MODE_MUSIC:
-    break;
-  case MODE_SIMON:
-    break;
-  case MODE_LOGIC:
-    break;
-  }
 
-  delay(100);
+  delay(100); // Simple delay for now - we will try out interrupts later
 }
 
 ////////// VARIOUS FUNCTIONS ////////////

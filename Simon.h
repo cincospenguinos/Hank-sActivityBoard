@@ -23,11 +23,12 @@ class Simon {
     Simon(Buzzer b);
     void newPuzzle();
     void showStartup(Buzzer b);
-    void submitButton(int button, Buzzer b);
+    int submitButton(int button, Buzzer b);
     void showCurrentPuzzle(Buzzer b);
   private:
     int puzzle[PUZZLE_LENGTH];
-    int currentTurnIndex = 2;
+    int endOfTurnIndex = 2;
+    int currentTurnIndex = 0;
     void showSuccess(Buzzer b);
     void showFailure(Buzzer b);
     void showWin(Buzzer b);

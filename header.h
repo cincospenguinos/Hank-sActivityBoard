@@ -25,6 +25,6 @@
 // Actvity modes
 #define TOTAL_MODES 3
 #define MODE_MUSIC 0
-#define MODE_SIMON 1
-#define MODE_LOGIC 2
+#define MODE_LOGIC 1
+#define MODE_SIMON 2
 #endif
