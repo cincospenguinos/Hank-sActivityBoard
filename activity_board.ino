@@ -80,6 +80,11 @@ void loop() {
         break;
       case MODE_LOGIC:
         logicPuzzle.submitButton(button);
+
+        if(logicPuzzle.solved()){
+          // TODO: Play some music or something
+          Logger::info("PUZZLE SOLVED!");  
+        }
         break;
       case MODE_SIMON:
         int result;

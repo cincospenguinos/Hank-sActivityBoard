@@ -10,7 +10,8 @@ void LogicPuzzle::newLogicPuzzle(int turnsAway){
     currentState[i] = HIGH;
 
   randomSeed(analogRead(0));
-  
+
+  // TODO: Currently can create a puzzle that presses a button twice in a row. Fix that.
   Logger::info("Creating puzzle...");
   for(int i = 0; i < turnsAway; i++){
     int button = BUTTON_FROM_COLOR(random(4));
@@ -21,6 +22,15 @@ void LogicPuzzle::newLogicPuzzle(int turnsAway){
   }
 
   showCurrentState();
+}
+
+bool LogicPuzzle::solved(){
+  bool val = true;
+  
+  for(int i = 0; i < 4 ; i++)
+    val = val && currentState[i];
+
+  return val;
 }
 
 void LogicPuzzle::submitButton(int button){

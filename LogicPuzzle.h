@@ -13,6 +13,7 @@ class LogicPuzzle {
     LogicPuzzle(int);
     void newLogicPuzzle(int turnsAway);
     void submitButton(int which);
+    bool solved();
   private:
     bool currentState[4];
     void toggle(int which);
