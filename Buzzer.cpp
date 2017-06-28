@@ -1,4 +1,5 @@
 #include "Buzzer.h"
+#include "Arduino.h"
 
 Buzzer::Buzzer(int _pin){
   pinMode(outputPin, OUTPUT);

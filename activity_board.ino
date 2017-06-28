@@ -11,6 +11,7 @@
  */
 #include "Buzzer.h"
 #include "Simon.h"
+#include "Logger.h"
 #include "header.h"
 #include "LogicPuzzle.h"
 
