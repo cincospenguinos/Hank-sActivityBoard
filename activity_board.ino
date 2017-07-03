@@ -8,7 +8,7 @@
  * -> Play Simon when a button is pressed
  * -> Logic game to turn on all the LEDs
  * -> Press a button to play a note
- */
+ */ 
 #include "Buzzer.h"
 #include "Simon.h"
 #include "header.h"
