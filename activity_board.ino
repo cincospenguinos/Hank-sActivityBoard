@@ -11,7 +11,6 @@
  */
 #include "Buzzer.h"
 #include "Simon.h"
-#include "Logger.h"
 #include "header.h"
 #include "LogicPuzzle.h"
 
@@ -64,7 +63,7 @@ void loop() {
         simon.showStartup(buzzer);
         delay(1000);
         simon.showCurrentPuzzle(buzzer);
-      } else if (mode = MODE_LOGIC){
+      } else if (mode == MODE_LOGIC){
         Serial.println("Creating new Logic puzzle...");
         logicPuzzle.newLogicPuzzle(3);
       }
@@ -82,8 +81,9 @@ void loop() {
         logicPuzzle.submitButton(button);
 
         if(logicPuzzle.solved()){
-          // TODO: Play some music or something
-          Logger::info("PUZZLE SOLVED!");  
+          static char pitches[6] = {'c', 'd', 'e', 'c', 'g', 'c'};
+          for(int i = 0; i < 6; i++)
+            buzzer.play(pitches[i], 4, Buzzer::EIGHTH);
         }
         break;
       case MODE_SIMON:

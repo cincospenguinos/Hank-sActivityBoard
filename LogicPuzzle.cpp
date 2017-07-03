@@ -1,7 +1,6 @@
 #include "LogicPuzzle.h"
 #include "Arduino.h"
 #include "header.h"
-#include "Logger.h"
 
 LogicPuzzle::LogicPuzzle(int j){}
 
@@ -11,13 +10,14 @@ void LogicPuzzle::newLogicPuzzle(int turnsAway){
 
   randomSeed(analogRead(0));
 
-  // TODO: Currently can create a puzzle that presses a button twice in a row. Fix that.
-  Logger::info("Creating puzzle...");
+  int last = -1;
   for(int i = 0; i < turnsAway; i++){
-    int button = BUTTON_FROM_COLOR(random(4));
+    int button = -1;
+    while(button == last)
+      button = BUTTON_FROM_COLOR(random(4));
+    
     static char buf[20];
     sprintf(buf, "Pressing button %i", button);
-    Logger::info(buf);
     submitButton(button);
   }
 
@@ -62,11 +62,11 @@ void LogicPuzzle::toggle(int which){
 }
 
 void LogicPuzzle::showCurrentState(){
-  Logger::info(" ***CURRENT STATE*** ");
+  Serial.println("*** CURRENT STATE ***");
   for(int i = 0; i < 4; i++){
     static char buf[6];
     sprintf(buf, "%i \t %i", i, currentState[i]);
-    Logger::info(buf);
+    Serial.println(buf);
     digitalWrite(LED_FROM_COLOR(i), currentState[i]);
   }
 }
